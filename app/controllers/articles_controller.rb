@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   include ArticlesHelper
-
+  
   def index
     @articles = Article.all
   end
@@ -28,9 +28,18 @@ class ArticlesController < ApplicationController
   def destroy
   
     @article = Article.find(params[:id])
+
+    @article.comments.each do |comment|
+      comment.destroy
+    end
+
+    @article.taggings.each do |tagging|
+      tagging.destroy
+    end
+
     @article.destroy
 
-    flash.notice = "Article '#{@article.title}' Deleted!"
+    flash.notice = "Article Deleted!"
 
     redirect_to articles_path
   end
@@ -46,7 +55,7 @@ class ArticlesController < ApplicationController
     flash.notice = "Article '#{@article.title}' Updated!"
 
     redirect_to article_path(@article)
-
   end
 
+  
 end

@@ -1,6 +1,19 @@
 <h1><%= @article.title %></h1>
 
+<% if @article.tags.any? %>
+  <p>
+    Tags:
+    <% @article.tags.each do |tag| %>
+      <%= link_to tag.name, tag_path(tag) %>
+    <% end %>
+  </p>
+<% end %>
+
+<br />
+
 <p><%= @article.body %></p>
+
+<br />
 
 <p> <i> Posted <%= distance_of_time_in_words(@article.created_at, Time.now) %> ago </i> </p>
 
