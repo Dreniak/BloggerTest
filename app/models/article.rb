@@ -14,4 +14,7 @@ class Article < ApplicationRecord
     self.tags = new_or_found_tags
   end
 
+  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }
+  validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png"]
+
 end
